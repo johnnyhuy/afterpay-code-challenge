@@ -61,6 +61,7 @@ Provide documentation on:
 
 Here are my additional changes I may or may not get to do. The end goal of this setup is to host a simple web server, but I want to see what alternative ways I can approach this on top of the code challenge.
 
+- Use a locked down IAM user to deploy this stack - instead of my personal admin account
 - Add this into a CI/CD pipeline
 - PR based infrastructure deployments - [Atlantis](https://www.runatlantis.io/)
 - Enable HTTPS on the web server and add a redirect route on port 80
