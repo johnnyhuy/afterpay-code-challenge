@@ -3,3 +3,7 @@
 [Provisioners in Terraform](https://www.terraform.io/docs/provisioners/index.html)
 
 [How to use Packer and Terraform](https://learn.hashicorp.com/tutorials/terraform/packer)
+
+[Packer with Terraform](https://medium.com/@archanabalasundaram/packer-with-terraform-8c45f895cddb)
+
+[Immutable Infrastructure Using Packer, Ansible, and Terraform](https://medium.com/paul-zhao-projects/immutable-infrastructure-using-packer-ansible-and-terraform-a275aa6e9ff7)
