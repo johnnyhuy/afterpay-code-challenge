@@ -6,7 +6,12 @@ resource "aws_lb" "this" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.load_balancer.id]
 
-  tags = local.tags
+  tags = merge(
+    {
+      Name = "afterpay-vm-lb"
+    },
+    local.tags
+  )
 }
 
 resource "aws_lb_listener" "https_forward" {

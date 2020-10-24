@@ -1,7 +1,12 @@
 resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
 
-  tags = local.tags
+  tags = merge(
+    {
+      Name = "afterpay-igw"
+    },
+    local.tags
+  )
 }
 
 resource "aws_vpc" "this" {
@@ -9,7 +14,12 @@ resource "aws_vpc" "this" {
   enable_dns_support   = true
   enable_dns_hostnames = true
 
-  tags = local.tags
+  tags = merge(
+    {
+      Name = "afterpay-vpc"
+    },
+    local.tags
+  )
 }
 
 resource "aws_subnet" "public_a" {
@@ -18,7 +28,12 @@ resource "aws_subnet" "public_a" {
   map_public_ip_on_launch = true
   cidr_block              = cidrsubnet(aws_vpc.this.cidr_block, 4, 1)
 
-  tags = local.tags
+  tags = merge(
+    {
+      Name = "afterpay-subnet-a"
+    },
+    local.tags
+  )
 }
 
 resource "aws_subnet" "public_b" {
@@ -27,7 +42,12 @@ resource "aws_subnet" "public_b" {
   map_public_ip_on_launch = true
   cidr_block              = cidrsubnet(aws_vpc.this.cidr_block, 4, 2)
 
-  tags = local.tags
+  tags = merge(
+    {
+      Name = "afterpay-subnet-b"
+    },
+    local.tags
+  )
 }
 
 resource "aws_subnet" "public_c" {
@@ -36,13 +56,23 @@ resource "aws_subnet" "public_c" {
   map_public_ip_on_launch = true
   cidr_block              = cidrsubnet(aws_vpc.this.cidr_block, 4, 3)
 
-  tags = local.tags
+  tags = merge(
+    {
+      Name = "afterpay-subnet-c"
+    },
+    local.tags
+  )
 }
 
 resource "aws_default_route_table" "public" {
   default_route_table_id = aws_vpc.this.main_route_table_id
 
-  tags = local.tags
+  tags = merge(
+    {
+      Name = "afterpay-public"
+    },
+    local.tags
+  )
 }
 
 resource "aws_route" "public_internet_gateway" {

@@ -16,6 +16,13 @@ resource "aws_security_group" "vm" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  
+  tags = merge(
+    {
+      Name = "afterpay-vm-sg"
+    },
+    local.tags
+  )
 }
 
 resource "aws_security_group" "load_balancer" {
@@ -50,5 +57,10 @@ resource "aws_security_group" "load_balancer" {
     ]
   }
 
-  tags = local.tags
+  tags = merge(
+    {
+      Name = "afterpay-load-balancer-sg"
+    },
+    local.tags
+  )
 }
