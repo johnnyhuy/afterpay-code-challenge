@@ -1,3 +1,20 @@
+resource "tls_private_key" "worker" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "worker" {
+  key_name   = "worker"
+  public_key = tls_private_key.worker.public_key_openssh
+
+  tags = merge(
+    {
+      Name = "afterpay-worker-ssh"
+    },
+    local.tags
+  )
+}
+
 resource "aws_instance" "a" {
   # Ubuntu Server 20.04 LTS (HVM), SSD Volume Type 64-bit x86
   ami                         = "ami-0f158b0f26f18e619"
@@ -5,10 +22,11 @@ resource "aws_instance" "a" {
   subnet_id                   = aws_subnet.public_a.id
   vpc_security_group_ids      = [aws_security_group.vm.id]
   associate_public_ip_address = true
+  key_name                    = aws_key_pair.worker.key_name
 
   tags = merge(
     {
-      Name = "afterpay-vm-a"
+      Name = "afterpay-worker-a-vm"
     },
     local.tags
   )
@@ -21,10 +39,11 @@ resource "aws_instance" "b" {
   subnet_id                   = aws_subnet.public_b.id
   vpc_security_group_ids      = [aws_security_group.vm.id]
   associate_public_ip_address = true
+  key_name                    = aws_key_pair.worker.key_name
 
   tags = merge(
     {
-      Name = "afterpay-vm-b"
+      Name = "afterpay-worker-b-vm"
     },
     local.tags
   )
@@ -37,10 +56,11 @@ resource "aws_instance" "c" {
   subnet_id                   = aws_subnet.public_c.id
   vpc_security_group_ids      = [aws_security_group.vm.id]
   associate_public_ip_address = true
+  key_name                    = aws_key_pair.worker.key_name
 
   tags = merge(
     {
-      Name = "afterpay-vm-c"
+      Name = "afterpay-worker-c-vm"
     },
     local.tags
   )
