@@ -3,11 +3,20 @@ resource "aws_security_group" "vm" {
   description = "Alow inbound access to the VM."
   vpc_id      = aws_vpc.this.id
 
+  # Web server
   ingress {
     protocol        = "tcp"
     from_port       = 5000
     to_port         = 5000
     security_groups = [aws_security_group.load_balancer.id]
+  }
+
+  # SSH
+  ingress {
+    protocol    = "tcp"
+    from_port   = 22
+    to_port     = 22
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -16,7 +25,7 @@ resource "aws_security_group" "vm" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
+
   tags = merge(
     {
       Name = "afterpay-vm-sg"
