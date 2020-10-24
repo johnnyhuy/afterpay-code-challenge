@@ -13,3 +13,7 @@
 [The Right Way to DevOps with Terraform and Ansible](https://www.youtube.com/watch?v=AsPIKWF1y_M)
 
 [Terraform Ansible example with Terraform Inventory](https://github.com/startup-systems/terraform-ansible-example)
+
+[How to build your inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html)
+
+[How do I create an SSH key in Terraform?](https://stackoverflow.com/questions/49743220/how-do-i-create-an-ssh-key-in-terraform)
