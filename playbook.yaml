@@ -1,6 +1,6 @@
   
 ---
-- hosts: web
+- hosts: public
   name: configuration play
   user: ubuntu
 

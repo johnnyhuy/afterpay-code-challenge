@@ -12,6 +12,10 @@ terraform {
       source = "hashicorp/tls"
       version = "3.0.0"
     }
+    ansible = {
+      source = "nbering/ansible"
+      version = "1.0.4"
+    }
   }
 }
 
