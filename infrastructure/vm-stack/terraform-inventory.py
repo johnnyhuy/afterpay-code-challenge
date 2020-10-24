@@ -376,8 +376,8 @@ def _execute_shell():
         sys.exit(1)
     else:
         tf_command = [TERRAFORM_PATH, 'state', 'pull']
-        proc_tf_cmd = Popen(tf_command, cwd=TERRAFORM_DIR,
-                            stdout=PIPE, stderr=PIPE, universal_newlines=True)
+        proc_tf_cmd = Popen(tf_command, cwd=TERRAFORM_DIR, stdout=PIPE,
+                            stderr=PIPE, universal_newlines=True, encoding='UTF-8')
         out_cmd, err_cmd = proc_tf_cmd.communicate()
         if err_cmd != '':
             sys.stderr.write(str(err_cmd)+'\n')
