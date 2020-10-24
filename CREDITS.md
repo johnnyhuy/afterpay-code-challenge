@@ -11,3 +11,5 @@
 [Packer vs Ansible?](https://www.iheavy.com/2020/02/02/when-should-i-use-ansible-versus-packer-or-terraform/)
 
 [The Right Way to DevOps with Terraform and Ansible](https://www.youtube.com/watch?v=AsPIKWF1y_M)
+
+[Terraform Ansible example with Terraform Inventory](https://github.com/startup-systems/terraform-ansible-example)
