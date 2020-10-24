@@ -65,3 +65,27 @@ resource "aws_instance" "c" {
     local.tags
   )
 }
+
+resource "ansible_host" "a" {
+  inventory_hostname = aws_instance.a.public_dns
+  groups             = ["public"]
+  vars = {
+    username = "ubuntu"
+  }
+}
+
+resource "ansible_host" "b" {
+  inventory_hostname = aws_instance.b.public_dns
+  groups             = ["public"]
+  vars = {
+    username = "ubuntu"
+  }
+}
+
+resource "ansible_host" "c" {
+  inventory_hostname = aws_instance.c.public_dns
+  groups             = ["public"]
+  vars = {
+    username = "ubuntu"
+  }
+}
