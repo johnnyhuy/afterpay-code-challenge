@@ -1,6 +1,6 @@
 locals {
   tags = {
-    Environment = "production"
+    Environment = "demo"
     Owner       = "info@johnnyhuy.com"
     Application = "VM Stack"
   }
