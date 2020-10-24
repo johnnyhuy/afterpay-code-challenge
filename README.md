@@ -12,15 +12,15 @@ It gives me great honor to provide you guys with the skill and mindset of a seni
 
 ## Minimum requirements
 
-Choose any host Linux OS
+- [x] Choose any host Linux OS
 
-Patch to recent security packages
+- [x] Patch to recent security packages
 
-Disable `IPv6`
+- [ ] Disable `IPv6`
 
 > Curious to why we want this off, discussion required
 
-Install the following packages 
+- [ ] Install the following packages 
   - `ntp`
   - `telnet`
   - `mtr`
@@ -28,21 +28,21 @@ Install the following packages
 
 > Installing miscellaneous tools, though I would like to be curious to see why we need them
 
-Set max open files limit across all users/processes, soft & hard
+- [ ] Set max open files limit across all users/processes, soft & hard
   
 > This one is a fairly specific change, though may be warranted perhaps due to the company identifying this as a problem in their VMs
 
 > Further question, how we do test this capability?
 
-Setup AWS Linux OS image with relevant pre-boot setup
+- [x] Setup AWS Linux OS image with relevant pre-boot setup
 
 > Hopefully [Terraform](https://www.terraform.io/) and [Ansible](https://www.ansible.com/) are good fits for this
 
-Setup the web server from the test application and make sure it's available on port 80
+- [ ] Setup the web server from the test application and make sure it's available on port 80
 
 > I will comply to the requirement, but will try offer an alternative more secure connection if I get time
 
-Ensure server is locked-down and secure
+- [ ] Ensure server is locked-down and secure
 
 > This point here contradicts the fact that we're running the web server on port 80, leaving it susceptible to man in the middle attacks deeming it less secure
 > 
@@ -61,11 +61,14 @@ Provide documentation on:
 
 Here are my additional changes I may or may not get to do. The end goal of this setup is to host a simple web server, but I want to see what alternative ways I can approach this on top of the code challenge.
 
-- Use a locked down IAM user to deploy this stack - instead of my personal admin account
-- Add this into a CI/CD pipeline
-- PR based infrastructure deployments - [Atlantis](https://www.runatlantis.io/)
-- Enable HTTPS on the web server and add a redirect route on port 80
-- Provision this in a container environment like EKS - *because I fucken love Kubernetes*
+- [ ] Build a staging and production environment
+- [ ] Use Ansible Vault to seal secrets like SSH keys
+- [ ] Use a [pull based solution on Ansible](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#ansible-pull) to pull changes from this repo to deploy the application
+- [ ] Use a locked down IAM user to deploy this stack - instead of my personal admin account
+- [ ] Add this into a CI/CD pipeline
+- [ ] PR based infrastructure deployments - [Atlantis](https://www.runatlantis.io/)
+- [ ] Enable HTTPS on the web server and add a redirect route on port 80
+- [ ] Provision this in a container environment like EKS - *because I fucken love [Kubernetes](https://kubernetes.io/)*
 
 ## Assessment criteria
 
