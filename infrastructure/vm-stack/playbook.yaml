@@ -1,0 +1,22 @@
+---
+- hosts: public
+  name: Public web servers
+  user: ubuntu
+
+  pre_tasks:
+  - name: Update and Upgrade packages
+    become: true
+    raw: apt -yq update && apt -yq upgrade
+    changed_when: false
+
+  - name: Install Python
+    become: true
+    raw: test -e /usr/bin/python || (apt install -yq python)
+    changed_when: false
+
+  tasks:
+  - name: Install nginx
+    become: true
+    apt:
+      name: nginx
+      update_cache: true
