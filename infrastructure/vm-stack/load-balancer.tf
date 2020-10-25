@@ -40,3 +40,21 @@ resource "aws_lb_target_group" "this" {
 
   tags = local.tags
 }
+
+resource "aws_lb_target_group_attachment" "a" {
+  target_group_arn = aws_lb_target_group.this.arn
+  target_id        = aws_instance.a.private_ip
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "b" {
+  target_group_arn = aws_lb_target_group.this.arn
+  target_id        = aws_instance.b.private_ip
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "c" {
+  target_group_arn = aws_lb_target_group.this.arn
+  target_id        = aws_instance.c.private_ip
+  port             = 80
+}
