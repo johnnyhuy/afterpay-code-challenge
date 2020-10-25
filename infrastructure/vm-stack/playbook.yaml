@@ -4,24 +4,12 @@
   user: ubuntu
 
   pre_tasks:
-  - name: Update and Upgrade packages
+  - name: Updating and upgrading packages
     become: true
     raw: apt -yq update && apt -yq upgrade
     changed_when: false
 
-  - name: Install Python
-    become: true
-    raw: test -e /usr/bin/python || (apt install -yq python)
-    changed_when: false
-
-  tasks:
-  - name: Install NGINX
-    become: true
-    apt:
-      name: nginx=1.18.0-0ubuntu1
-      update_cache: true
-
-  - name: Install Python
+  - name: Installing Python
     become: true
     apt:
       name: 
@@ -29,7 +17,14 @@
       - python3-pip=20.0.2-5ubuntu1.1
       update_cache: true
 
-  - name: Install Python tools
+  tasks:
+  - name: Installing NGINX
+    become: true
+    apt:
+      name: nginx=1.18.0-0ubuntu1
+      update_cache: true
+
+  - name: Installing Python tools
     pip:
       name:
       - virtualenv
@@ -43,14 +38,23 @@
       state: present
       gid: 1405
 
-  - name: Add test application service account
+  - name: Adding test application service account
     become: true
     user:
       name: test-application
       comment: Service account for the test application
+      create_home: false
       state: present
       uid: 1405
       group: test-application
+
+  - name: Adding test application group to NGINX user
+    become: true
+    user:
+      name: www-data
+      groups:
+      - test-application
+      append: true
 
   - name: Create test application directory
     become: true
@@ -59,7 +63,7 @@
       state: directory
       owner: test-application
       group: test-application
-      mode: '0640'
+      mode: '0770'
 
   - name: Copy test application
     become: true
@@ -69,6 +73,11 @@
       mode: '0640'
       src: ./../../test-application
       dest: /srv
+
+  - name: Install test application dependencies
+    pip:
+      requirements: /srv/test-application/requirements.txt
+      virtualenv: /srv/test-application/venv
   
   - name: Auto clean
     become: true
