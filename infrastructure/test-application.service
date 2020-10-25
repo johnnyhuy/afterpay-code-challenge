@@ -1,0 +1,17 @@
+[Unit]
+Description=Test Application
+
+[Service]
+Type=notify
+User=test-application
+Group=test-application
+RuntimeDirectory=gunicorn
+WorkingDirectory=/srv/test-application
+ExecStart=/srv/test-application/venv/bin/gunicorn --access-logfile - --workers 3 tiny_app:app
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

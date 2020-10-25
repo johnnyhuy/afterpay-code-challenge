@@ -45,9 +45,8 @@
     pip:
       name:
       - virtualenv==20.0.35
-      - supervisor==4.2.1
 
-  - name: Create test application service account group
+  - name: Creating test application service account group
     become: true
     group:
       name: test-application
@@ -72,7 +71,7 @@
       - test-application
       append: true
 
-  - name: Create test application server directory
+  - name: Creating test application server directory
     become: true
     file:
       path: /srv/test-application
@@ -81,7 +80,7 @@
       group: test-application
       mode: '0770'
 
-  - name: Create test application virtualenv directory
+  - name: Creating test application virtualenv directory
     become: true
     file:
       path: /srv/test-application/venv
@@ -90,7 +89,7 @@
       group: test-application
       mode: '0770'
 
-  - name: Copy test application
+  - name: Copying test application
     become: true
     copy:
       owner: test-application
@@ -99,19 +98,68 @@
       src: ./../test-application
       dest: /srv
 
-  - name: Install test application dependencies
+  - name: Installing test application dependencies
     become: true
     become_user: test-application
     pip:
       requirements: /srv/test-application/requirements.txt
       virtualenv: /srv/test-application/venv
+
+  - name: Installing test application Python dependencies
+    become: true
+    become_user: test-application
+    pip:
+      requirements: /srv/test-application/requirements.txt
+      virtualenv: /srv/test-application/venv
+      state: latest
+
+  - name: Deleting default NGINX config
+    become: true
+    file:
+      path: /etc/nginx/sites-enabled/default
+      state: absent
+
+  - name: Copying test application NGINX config
+    become: true
+    template:
+      owner: test-application
+      group: test-application
+      mode: '0644'
+      src: ./test-application-nginx.conf
+      dest: /etc/nginx/sites-enabled
+
+  - name: Restarting NGINX systemd service
+    become: true
+    service:
+      name: nginx
+      state: restarted
+
+  - name: Copying test application systemd service
+    become: true
+    template:
+      owner: test-application
+      group: test-application
+      mode: '0644'
+      src: ./test-application.service
+      dest: /lib/systemd/system
+
+  - name: Reloading systemd daemon
+    become: true
+    systemd:
+      daemon_reload: yes
+
+  - name: Starting test application service
+    become: true
+    service:
+      name: test-application
+      state: started
   
-  - name: Auto clean
+  - name: Auto cleaning Ubuntu packages
     become: true
     apt:
       autoclean: yes
 
-  - name: Auto remove
+  - name: Auto removing Ubuntu packages
     become: true
     apt:
       autoremove: yes
