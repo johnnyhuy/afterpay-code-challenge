@@ -8,9 +8,9 @@ output "host_a_dns" {
 }
 
 output "host_b_dns" {
-  value = aws_instance.a.public_dns
+  value = aws_instance.b.public_dns
 }
 
 output "host_c_dns" {
-  value = aws_instance.a.public_dns
+  value = aws_instance.c.public_dns
 }
