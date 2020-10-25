@@ -56,7 +56,7 @@ sync:
 	@printf '$(GREEN)Terraform deployment complete!$(RESET)\n'
 	@printf '\n$(GREEN)The website is now available$(RESET)\n\n'
 	@printf '    $(YELLOW)curl http://$(shell cd infrastructure; terraform output load_balancer_dns)$(RESET)\n\n'
-	@printf '$(GREEN)Terraform deployment complete!$(RESET)\n'
+	@printf '$(GREEN)Ansible deployment complete!$(RESET)\n'
 	@printf '$(GREEN)Sync complete!$(RESET)\n'
 
 play:
@@ -67,7 +67,7 @@ play:
 	cd infrastructure; ansible-playbook -i terraform-inventory.py playbook.yaml
 	@printf '$(GREEN)The website is now available$(RESET)\n\n'
 	@printf '    $(YELLOW)curl http://$(shell cd infrastructure; terraform output load_balancer_dns)$(RESET)\n\n'
-	@printf '$(GREEN)Terraform deployment complete!$(RESET)\n'
+	@printf '$(GREEN)Ansible deployment complete!$(RESET)\n'
 
 destroy:
 	@printf 'Destroying infrastructure$(RESET)\n'
