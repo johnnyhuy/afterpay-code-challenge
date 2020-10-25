@@ -36,9 +36,8 @@
     become: true
     pip:
       name:
-      - virtualenv
-      - supervisor
-      - uwsgi
+      - virtualenv==20.0.35
+      - supervisor==4.2.1
 
   - name: Create test application service account group
     become: true
