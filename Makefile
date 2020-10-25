@@ -25,3 +25,8 @@ play:
 
 destroy:
 	cd infrastructure/vm-stack; terraform destroy
+
+re-create:
+	cd infrastructure/vm-stack; terraform destroy -auto-approve
+	cd infrastructure/vm-stack; terraform apply -auto-approve
+	cd infrastructure/vm-stack; ansible-playbook -i terraform-inventory.py playbook.yaml
