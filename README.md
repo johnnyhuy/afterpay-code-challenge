@@ -28,7 +28,7 @@ It gives me great honor to provide you guys with the skill and mindset of a seni
 
 > Installing miscellaneous tools, though I would like to be curious to see why we need them
 
-- [ ] Set max open files limit across all users/processes, soft & hard
+- [x] Set max open files limit across all users/processes, soft & hard
   
 > This one is a fairly specific change, though may be warranted perhaps due to the company identifying this as a problem in their VMs
 
