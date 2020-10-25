@@ -7,8 +7,8 @@ export CYAN=\033[0;36m
 export YELLOW=\033[1;33m
 export RESET=\033[0m
 
-ifeq (, $(shell which python))
-$(error "No 'python' found in PATH, please install the tool before continuing")
+ifeq (, $(shell which python3))
+$(error "No 'python3' found in PATH, please install the tool before continuing")
 endif
 
 ifeq (, $(shell which ansible))
