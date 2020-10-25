@@ -84,18 +84,6 @@ re-create:
 	cd infrastructure; ansible-playbook -i terraform-inventory.py playbook.yaml
 
 version:
-	ifeq (, $(shell which node))
-	$(error "No 'node' found in PATH, please install the tool before continuing")
-	endif
-	ifndef GH_TOKEN
-	$(error GH_TOKEN environment variable - GitHub token is required for GitHub releases)
-	endif
-	ifndef GH_EMAIL
-	$(error GH_EMAIL environment variable - GitHub email is required for GitHub releases)
-	endif
-	ifndef GH_USERNAME
-	$(error GH_USERNAME environment variable - GitHub username is required for GitHub releases)
-	endif
 	@printf '$(CYAN)Node.js v14+ required$(RESET)\n'
 	@printf '$(CYAN)Semantic releasing Git changes$(RESET)\n'
 	npx semantic-release --no-ci
