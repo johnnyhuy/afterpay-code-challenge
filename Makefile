@@ -3,9 +3,13 @@
 export TF_LOG=
 
 init:
+	@echo Please setup an AWS IAM admin user prior to running this command
 	aws configure
+	@echo Creating inline SSH key (for demonstration purposes)
 	ssh-keygen -q -N "" -C '' -t rsa -b 4096 -f infrastructure/identity.pem
 	sudo chmod 0600 infrastructure/identity.pem
+	@echo VM SSH key is located at infrastructure/identity
+	@echo Please run "make deploy" to deploy infrastructure or "make sync" to deploy infrastructure and configure instances
 
 deploy:
 	@echo WARNING! Make sure we have configured AWS CLI 'aws configure'
