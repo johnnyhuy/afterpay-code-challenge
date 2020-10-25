@@ -29,3 +29,9 @@
 [Ansible - built-in plugins](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html#plugins-in-ansible-builtin)
 
 [Ansible - using become](https://docs.ansible.com/ansible/latest/user_guide/become.html)
+
+[Deploying Gunicorn](https://docs.gunicorn.org/en/stable/deploy.html)
+
+[Order of executing roles, tasks, pre_tasks, post_task. Can tasks be defined in playbook?](https://stackoverflow.com/questions/49678997/order-of-executing-roles-tasks-pre-tasks-post-task-can-tasks-be-defined-in-p)
+
+[Ansible creating a virtualenv](https://stackoverflow.com/questions/26402123/ansible-creating-a-virtualenv)
