@@ -9,6 +9,14 @@
     raw: apt -yq update && apt -yq upgrade
     changed_when: false
 
+  # Package is needed to allow non-root tasks to work
+  # https://github.com/georchestra/ansible/issues/55
+  - name: Installing acl
+    become: true
+    apt:
+      name: acl
+      update_cache: true
+
   - name: Installing Python
     become: true
     apt:
@@ -25,6 +33,7 @@
       update_cache: true
 
   - name: Installing Python tools
+    become: true
     pip:
       name:
       - virtualenv
@@ -56,10 +65,19 @@
       - test-application
       append: true
 
-  - name: Create test application directory
+  - name: Create test application server directory
     become: true
     file:
       path: /srv/test-application
+      state: directory
+      owner: test-application
+      group: test-application
+      mode: '0770'
+
+  - name: Create test application virtualenv directory
+    become: true
+    file:
+      path: /srv/test-application/venv
       state: directory
       owner: test-application
       group: test-application
@@ -71,10 +89,12 @@
       owner: test-application
       group: test-application
       mode: '0640'
-      src: ./../../test-application
+      src: ./../test-application
       dest: /srv
 
   - name: Install test application dependencies
+    become: true
+    become_user: test-application
     pip:
       requirements: /srv/test-application/requirements.txt
       virtualenv: /srv/test-application/venv
