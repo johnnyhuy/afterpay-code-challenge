@@ -35,3 +35,7 @@ Though this doesn't seem like a problem with a small set of VMs. But once we int
 Ideally we'd want the deployment process to be as automated as possible. But this feature seems like it cannot be done through Ansible due to this [GitHub issue](https://github.com/ansible/ansible/pull/22764). We need to pass the key in via stdout but that's not a feature in Ansible at the moment.
 
 Fallback solution is to generate the key locally and pass it into the Terraform templates. There should be wider discussions on how we maintain keys going forward, the recommended way would be to use a bastion server or store keys in a secret vault like AWS SecretsManager or HashiCorp Vault.
+
+## Using Flask as the web server
+
+I've noticed that the test application uses Flask. We can run the task inline with a command though that's mainly for development purposes.
