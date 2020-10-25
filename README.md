@@ -20,7 +20,7 @@ It gives me great honor to provide you guys with the skill and mindset of a seni
 
 > Curious to why we want this off, discussion required
 
-- [ ] Install the following packages 
+- [x] Install the following packages 
   - `ntp`
   - `telnet`
   - `mtr`
@@ -38,7 +38,7 @@ It gives me great honor to provide you guys with the skill and mindset of a seni
 
 > Hopefully [Terraform](https://www.terraform.io/) and [Ansible](https://www.ansible.com/) are good fits for this
 
-- [ ] Setup the web server from the test application and make sure it's available on port 80
+- [x] Setup the web server from the test application and make sure it's available on port 80
 
 > I will comply to the requirement, but will try offer an alternative more secure connection if I get time
 
@@ -61,6 +61,8 @@ Provide documentation on:
 
 Here are my additional changes I may or may not get to do. The end goal of this setup is to host a simple web server, but I want to see what alternative ways I can approach this on top of the code challenge.
 
+- [ ] Honeypot SSH
+- [ ] Restrict SSH via security groups
 - [ ] Build a staging and production environment
 - [ ] Use Ansible Vault to seal secrets like SSH keys
 - [ ] Use a [pull based solution on Ansible](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#ansible-pull) to pull changes from this repo to deploy the application
