@@ -4,6 +4,73 @@ It gives me great honor to provide you guys with the skill and mindset of a seni
 
 > I'll be voicing my thoughts on some of these points to understand them through quotes like this 😎
 
+## Outcome
+
+![](./images/stacks-ec2-final.svg)
+
+Go to [progress](./PROGRESS.md) logs for my entries throughout the work done.
+
+### Alternative proposal
+
+Due to time constraints I've detailed an alternative method to deploying to the servers that should restrict worker node access via the bastion servers. 
+
+![](./images/stacks-ec2-alternative.svg)
+
+### Time spent
+
+I've used Toggl to record my efforts as I would with any other job. Completion took about ~18 working hours, which equals ~4 business working days.
+
+![](./images/toggl.png)
+
+### Deployment
+
+We can run the following commands on Linux to get it running.
+
+This was tested on Windows 10, WSL 2 Ubuntu LTS 20.
+
+#### Prerequisites
+
+- Make
+- AWS credentials with an access key - administrator access for demo purposes
+- AWS CLI
+- Terraform `^v0.13`
+- Python `^v3.8`
+- Ansible `^v2.10`
+- *Money*
+
+#### Let's do it
+
+Change directory to the root repository and run the following commands.
+
+```bash
+# Please find the tools from the prerequisites, I'll put brew commands here in case
+brew install awscli terraform ansible python
+
+# Create 
+make init
+
+# Apply Terraform and Ansible changes
+make sync
+
+# Teardown the stack
+make destroy
+```
+
+Ta-da! You should have the VM stack mentioned in this challenge. There should be a message detailing you to access nodes and visit the load balancer DNS.
+
+![](./images/success.png)
+
+### Development
+
+Since this is a VM based deployment, we can use simple make commands to sync changes to the servers.
+
+I haven't considered blue-green deployments via Ansible but it is a suggestion.
+
+```bash
+# Apply Terraform and Ansible changes
+make sync
+```
+
 ## Overview
 
 - Provision a Linux VM based environment in AWS
@@ -42,7 +109,7 @@ It gives me great honor to provide you guys with the skill and mindset of a seni
 
 > I will comply to the requirement, but will try offer an alternative more secure connection if I get time
 
-- [ ] Ensure server is locked-down and secure
+- [x] Ensure server is locked-down and secure
 
 > This point here contradicts the fact that we're running the web server on port 80, leaving it susceptible to man in the middle attacks deeming it less secure
 > 
