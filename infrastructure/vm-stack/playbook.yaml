@@ -15,8 +15,67 @@
     changed_when: false
 
   tasks:
-  - name: Install nginx
+  - name: Install NGINX
     become: true
     apt:
-      name: nginx
+      name: nginx=1.18.0-0ubuntu1
       update_cache: true
+
+  - name: Install Python
+    become: true
+    apt:
+      name: 
+      - python3=3.8.2-0ubuntu2
+      - python3-pip=20.0.2-5ubuntu1.1
+      update_cache: true
+
+  - name: Install Python tools
+    pip:
+      name:
+      - virtualenv
+      - supervisor
+      - uwsgi
+
+  - name: Create test application service account group
+    become: true
+    group:
+      name: test-application
+      state: present
+      gid: 1405
+
+  - name: Add test application service account
+    become: true
+    user:
+      name: test-application
+      comment: Service account for the test application
+      state: present
+      uid: 1405
+      group: test-application
+
+  - name: Create test application directory
+    become: true
+    file:
+      path: /srv/test-application
+      state: directory
+      owner: test-application
+      group: test-application
+      mode: '0640'
+
+  - name: Copy test application
+    become: true
+    copy:
+      owner: test-application
+      group: test-application
+      mode: '0640'
+      src: ./../../test-application
+      dest: /srv
+  
+  - name: Auto clean
+    become: true
+    apt:
+      autoclean: yes
+
+  - name: Auto remove
+    become: true
+    apt:
+      autoremove: yes
