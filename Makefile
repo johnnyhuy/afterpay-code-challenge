@@ -35,9 +35,13 @@ init:
 	@printf '$(CYAN)Please run "make deploy" to deploy infrastructure or "make sync" to deploy infrastructure and configure instances$(RESET)\n'
 
 deploy:
-	@printf '$(YELLOW)WARNING! Make sure we have configured AWS CLI 'aws configure'$(RESET)\n'
+	@printf '$(YELLOW)WARNING! Make sure we have configured AWS CLI "aws configure"$(RESET)\n'
 	cd infrastructure; terraform init
 	cd infrastructure; terraform apply
+	@printf '\n$(GREEN)The following EC2 instances are now available$(RESET)\n\n'
+	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_a_dns) -i infrastructure/identity$(RESET)\n'
+	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_b_dns) -i infrastructure/identity$(RESET)\n'
+	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_c_dns) -i infrastructure/identity$(RESET)\n\n'
 	@printf '$(GREEN)Terraform deployment complete!$(RESET)\n'
 
 sync:
@@ -53,6 +57,9 @@ play:
 	ansible-galaxy collection install -r infrastructure/requirements.yaml
 	@printf '$(CYAN)Running just the Anisble playbooks$(RESET)\n'
 	cd infrastructure; ansible-playbook -i terraform-inventory.py playbook.yaml
+	@printf '$(GREEN)The website is now available$(RESET)\n\n'
+	@printf '    $(YELLOW)curl http://$(shell cd infrastructure; terraform output load_balancer_dns)$(RESET)\n\n'
+	@printf '$(GREEN)Terraform deployment complete!$(RESET)\n'
 
 destroy:
 	@printf 'Destroying infrastructure$(RESET)\n'
