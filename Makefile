@@ -31,7 +31,7 @@ init:
 	sudo chmod 0600 infrastructure/identity.pem
 	@printf '$(CYAN)Downloading Ansible community collection$(RESET)\n'
 	ansible-galaxy collection install -r infrastructure/requirements.yaml
-	@printf '$(YELLOW)VM SSH key is located at infrastructure/identity$(RESET)\n'
+	@printf '$(YELLOW)VM SSH key is located at infrastructure/identity.pem$(RESET)\n'
 	@printf '$(CYAN)Please run "make deploy" to deploy infrastructure or "make sync" to deploy infrastructure and configure instances$(RESET)\n'
 
 deploy:
@@ -39,9 +39,9 @@ deploy:
 	cd infrastructure; terraform init
 	cd infrastructure; terraform apply
 	@printf '\n$(GREEN)The following EC2 instances are now available$(RESET)\n\n'
-	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_a_dns) -i infrastructure/identity$(RESET)\n'
-	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_b_dns) -i infrastructure/identity$(RESET)\n'
-	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_c_dns) -i infrastructure/identity$(RESET)\n\n'
+	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_a_dns) -i infrastructure/identity.pem$(RESET)\n'
+	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_b_dns) -i infrastructure/identity.pem$(RESET)\n'
+	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_c_dns) -i infrastructure/identity.pem$(RESET)\n\n'
 	@printf '$(GREEN)Terraform deployment complete!$(RESET)\n'
 
 sync:
@@ -49,6 +49,14 @@ sync:
 	cd infrastructure; terraform init
 	cd infrastructure; terraform apply -auto-approve
 	cd infrastructure; ansible-playbook -i terraform-inventory.py playbook.yaml
+	@printf '\n$(GREEN)The following EC2 instances are now available$(RESET)\n\n'
+	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_a_dns) -i infrastructure/identity.pem$(RESET)\n'
+	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_b_dns) -i infrastructure/identity.pem$(RESET)\n'
+	@printf '    $(YELLOW)ssh ubuntu@$(shell cd infrastructure; terraform output host_c_dns) -i infrastructure/identity.pem$(RESET)\n\n'
+	@printf '$(GREEN)Terraform deployment complete!$(RESET)\n'
+	@printf '\n$(GREEN)The website is now available$(RESET)\n\n'
+	@printf '    $(YELLOW)curl http://$(shell cd infrastructure; terraform output load_balancer_dns)$(RESET)\n\n'
+	@printf '$(GREEN)Terraform deployment complete!$(RESET)\n'
 	@printf '$(GREEN)Sync complete!$(RESET)\n'
 
 play:
