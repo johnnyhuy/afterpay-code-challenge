@@ -1,61 +1,87 @@
 #!/usr/bin/make
 
 export TF_LOG=
+export RED=\033[0;31m
+export GREEN=\033[0;32m
+export CYAN=\033[0;36m
+export YELLOW=\033[1;33m
+export RESET=\033[0m
+
+ifeq (, $(shell which python))
+$(error "No 'python' found in PATH, please install the tool before continuing")
+endif
+
+ifeq (, $(shell which ansible))
+$(error "No 'ansible' found in PATH, please install the tool before continuing")
+endif
+
+ifeq (, $(shell which terraform))
+$(error "No 'terraform' found in PATH, please install the tool before continuing")
+endif
+
+ifeq (, $(shell which ssh-keygen))
+$(error "No 'ssh-keygen' found in PATH, please install the tool before continuing")
+endif
 
 init:
-	@echo Please setup an AWS IAM admin user prior to running this command
+	@printf '$(YELLOW)Please setup an AWS IAM admin user prior to running this command$(RESET)\n'
 	aws configure
-	@echo Creating inline SSH key for demonstration purposes
+	@printf '$(CYAN)Creating inline SSH key for demonstration purposes$(RESET)\n'
 	ssh-keygen -q -N "" -C '' -t rsa -b 4096 -f infrastructure/identity.pem
 	sudo chmod 0600 infrastructure/identity.pem
-	@echo Downloading Ansible community collection
+	@printf '$(CYAN)Downloading Ansible community collection$(RESET)\n'
 	ansible-galaxy collection install -r infrastructure/requirements.yaml
-	@echo VM SSH key is located at infrastructure/identity
-	@echo Please run "make deploy" to deploy infrastructure or "make sync" to deploy infrastructure and configure instances
+	@printf '$(YELLOW)VM SSH key is located at infrastructure/identity$(RESET)\n'
+	@printf '$(CYAN)Please run "make deploy" to deploy infrastructure or "make sync" to deploy infrastructure and configure instances$(RESET)\n'
 
 deploy:
-	@echo WARNING! Make sure we have configured AWS CLI 'aws configure'
+	@printf '$(YELLOW)WARNING! Make sure we have configured AWS CLI 'aws configure'$(RESET)\n'
 	cd infrastructure; terraform init
 	cd infrastructure; terraform apply
+	@printf '$(GREEN)Terraform deployment complete!$(RESET)\n'
 
 sync:
-	@echo This task will automatically apply Terraform and Ansible changes
+	@printf '$(YELLOW)This task will automatically apply Terraform and Ansible changes$(RESET)\n'
 	cd infrastructure; terraform init
 	cd infrastructure; terraform apply -auto-approve
 	cd infrastructure; ansible-playbook -i terraform-inventory.py playbook.yaml
-	@echo Sync complete!
+	@printf '$(GREEN)Sync complete!$(RESET)\n'
 
 play:
-	@echo WARNING! Command will not work if Terraform infrastructure has not been provisioned
-	@echo Downloading Ansible community collection
+	@printf '$(YELLOW)WARNING! Command will not work if Terraform infrastructure has not been provisioned$(RESET)\n'
+	@printf '$(CYAN)Downloading Ansible community collection$(RESET)\n'
 	ansible-galaxy collection install -r infrastructure/requirements.yaml
-	@echo Running just the Anisble playbooks
+	@printf '$(CYAN)Running just the Anisble playbooks$(RESET)\n'
 	cd infrastructure; ansible-playbook -i terraform-inventory.py playbook.yaml
 
 destroy:
-	@echo Destroying infrastructure
+	@printf 'Destroying infrastructure$(RESET)\n'
 	cd infrastructure; terraform destroy
-	@echo Ka-boom!
+	@printf 'Ka-boom!$(RESET)\n'
 
 re-create:
-	@echo Re-creating infrastructure
-	@echo Tearing down Terraform
+	@printf '$(CYAN)Re-creating infrastructure$(RESET)\n'
+	@printf '$(CYAN)Tearing down Terraform$(RESET)\n'
 	cd infrastructure; terraform destroy -auto-approve
-	@echo Re-applying Terraform
+	@printf '$(CYAN)Re-applying Terraform$(RESET)\n'
 	cd infrastructure; terraform apply -auto-approve
-	@echo Re-applying Ansible playbook
+	@printf '$(CYAN)Re-applying Ansible playbook$(RESET)\n'
 	cd infrastructure; ansible-playbook -i terraform-inventory.py playbook.yaml
 
 version:
-ifndef GH_TOKEN
+	ifeq (, $(shell which node))
+	$(error "No 'node' found in PATH, please install the tool before continuing")
+	endif
+	ifndef GH_TOKEN
 	$(error GH_TOKEN environment variable - GitHub token is required for GitHub releases)
-endif
-ifndef GH_EMAIL
+	endif
+	ifndef GH_EMAIL
 	$(error GH_EMAIL environment variable - GitHub email is required for GitHub releases)
-endif
-ifndef GH_USERNAME
+	endif
+	ifndef GH_USERNAME
 	$(error GH_USERNAME environment variable - GitHub username is required for GitHub releases)
-endif
-	@echo Node.js v14+ required
-	@echo Semantic releasing Git changes
+	endif
+	@printf '$(CYAN)Node.js v14+ required$(RESET)\n'
+	@printf '$(CYAN)Semantic releasing Git changes$(RESET)\n'
 	npx semantic-release --no-ci
+	
