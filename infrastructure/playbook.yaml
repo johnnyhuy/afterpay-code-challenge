@@ -30,7 +30,7 @@
       domain: '*'
       limit_type: hard
       limit_item: nofile
-      value: 65535
+      value: '65535'
 
   - name: Modifying soft nofile PAM limits
     become: true
@@ -38,7 +38,7 @@
       domain: '*'
       limit_type: soft
       limit_item: nofile
-      value: 65535
+      value: '65535'
 
   - name: Installing NGINX
     become: true
