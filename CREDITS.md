@@ -17,3 +17,15 @@
 [How to build your inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html)
 
 [How do I create an SSH key in Terraform?](https://stackoverflow.com/questions/49743220/how-do-i-create-an-ssh-key-in-terraform)
+
+[Terraform dynamic inventory](https://github.com/nbering/terraform-inventory)
+
+[Terraform provider Ansible](https://github.com/nbering/terraform-provider-ansible/)
+
+[Deploy flask app with nginx using gunicorn and supervisor](https://medium.com/ymedialabs-innovation/deploy-flask-app-with-nginx-using-gunicorn-and-supervisor-d7a93aa07c18)
+
+[Permission denied in directory](https://serverfault.com/questions/283405/permission-denied-to-cd-into-a-directory-even-though-permissions-are-correct)
+
+[Ansible - built-in plugins](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html#plugins-in-ansible-builtin)
+
+[Ansible - using become](https://docs.ansible.com/ansible/latest/user_guide/become.html)
