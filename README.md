@@ -16,7 +16,7 @@ It gives me great honor to provide you guys with the skill and mindset of a seni
 
 - [x] Patch to recent security packages
 
-- [ ] Disable `IPv6`
+- [x] Disable `IPv6`
 
 > Curious to why we want this off, discussion required
 
