@@ -1,4 +1,4 @@
-# TODO: make a management console to deploy Ansible changes
+# TODO: make a management console to deploy Ansible changes instead of our local machines
 # resource "aws_instance" "mc" {
 #   # Ubuntu Server 20.04 LTS (HVM), SSD Volume Type 64-bit x86
 #   ami                         = "ami-0f158b0f26f18e619"
