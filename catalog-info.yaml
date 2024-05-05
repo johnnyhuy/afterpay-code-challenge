@@ -1,0 +1,56 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: afterpay-code-challenge
+  title: Afterpay Code Challenge
+  description: A project to deploy a simple web application on AWS using Infrastructure as Code and Configuration Management tools.
+  tags:
+    - aws
+    - terraform
+    - ansible
+    - python
+spec:
+  type: service
+  lifecycle: development
+  owner: johnnyhuy
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: afterpay-web-application
+  title: Afterpay Web Application
+  description: The web application system deployed on AWS.
+spec:
+  owner: johnnyhuy
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: afterpay-code-challenge-aws-ec2-instances
+  title: EC2 Instances
+  description: EC2 instances provisioned on AWS for the web application
+  tags:
+    - aws
+    - ec2
+    - terraform
+spec:
+  type: vm
+  owner: johnnyhuy
+  system: afterpay-web-application
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: afterpay-code-challenge-aws-aws-load-balancer
+  title: AWS Load Balancer
+  description: Load balancer for the web application on AWS
+  tags:
+    - aws
+    - terraform
+spec:
+  type: load-balancer
+  owner: johnnyhuy
+  system: afterpay-web-application
