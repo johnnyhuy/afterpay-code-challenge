@@ -33,7 +33,6 @@ metadata:
   description: EC2 instances provisioned on AWS for the web application
   tags:
     - aws
-    - ec2
     - terraform
 spec:
   type: vm
